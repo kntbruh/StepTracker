@@ -1,12 +1,13 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import React, { FC } from "react";
 import { Colors } from "../../constants/Colors";
-import SVG, { Circle } from "react-native-svg";
+import SVG, { Circle, CircleProps } from "react-native-svg";
 import Animated, {
   useAnimatedProps,
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
+import { AntDesign } from "@expo/vector-icons";
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
@@ -33,42 +34,42 @@ const CircleProgress: FC<cirlceProps> = ({
   const animatedProps = useAnimatedProps(() => ({
     strokeDasharray: [diametr * fill.value, diametr],
   }));
-
+  // STYLES-------------------------------------------
   const styles = StyleSheet.create({
     circleContainer: {
       width: radius * 2,
       height: radius * 2,
       alignSelf: "center",
     },
+    icon: { position: "absolute", alignSelf: "center", top: 2 },
   });
+
+  const circleDefaultProps: CircleProps = {
+    r: innerRadius,
+    cx: radius,
+    cy: radius,
+    originX: radius,
+    originY: radius,
+    stroke: Colors.red,
+    fill: Colors.background,
+    strokeWidth: strokeWidth,
+    strokeLinecap: "round",
+    rotation: "-90",
+  };
   return (
     <View style={styles.circleContainer}>
       <SVG>
         {/* background circle */}
-        <Circle
-          r={innerRadius}
-          cx={radius}
-          cy={radius}
-          strokeWidth={strokeWidth}
-          stroke={Colors.red}
-          fill={Colors.background}
-          opacity={0.3}
-        />
+        <Circle {...circleDefaultProps} opacity={0.3} />
         {/* foreground circle */}
-        <AnimatedCircle
-          animatedProps={animatedProps}
-          r={innerRadius}
-          cx={radius}
-          cy={radius}
-          originX={radius}
-          originY={radius}
-          stroke={Colors.red}
-          fill={Colors.background}
-          strokeWidth={strokeWidth}
-          strokeLinecap="round"
-          rotation="-90"
-        />
+        <AnimatedCircle animatedProps={animatedProps} {...circleDefaultProps} />
       </SVG>
+      <AntDesign
+        name="arrowright"
+        size={strokeWidth * 0.8}
+        color={Colors.background}
+        style={styles.icon}
+      />
     </View>
   );
 };

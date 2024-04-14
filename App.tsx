@@ -6,7 +6,7 @@ import CircleProgress from "./src/components/CircleProgress";
 export default function App() {
   return (
     <View style={styles.container}>
-      <CircleProgress progress={0.5} />
+      <CircleProgress radius={100} strokeWidth={40} progress={0.5} />
       <View style={styles.stepsData}>
         <LabelValue label="Steps" value="1337" />
         <LabelValue label="Distance" value="2,28 km" />
