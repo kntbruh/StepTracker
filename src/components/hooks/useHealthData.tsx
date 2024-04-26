@@ -142,7 +142,7 @@ const useHealthData = (date: Date) => {
       return;
     }
     readSampleData();
-  }, []);
+  }, [date]);
   return {
     steps,
     flights,
